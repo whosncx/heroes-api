@@ -25,12 +25,15 @@ export class ErrosHttp  extends Error {
             case "get-villains-erro":
                 this.messageError.message = "Sorry, we couldn't return villains list";
                 this.badRequest()
-            case "get-heroes-erro":
-                this.messageError.message = "Sorry, we couldn't return heroes list";
-                this.badRequest()
             case "search-heroes-erro":
                 this.messageError.message = "Sorry, we couldn't return hero info";
                 this.notFound()
+            case "get-heroes-erro":
+                this.messageError.message = "Sorry, we couldn't return heroes list";
+                this.badRequest()
+            case "invalid-name":
+                this.messageError.message = "Hero name is not valid";
+                this.unprocesseableEntity()
         }
  
     }
@@ -41,6 +44,10 @@ export class ErrosHttp  extends Error {
 
     public badRequest(): express.Response {
         this.statusCode = 400;
+        return this.res.status(this.statusCode).json(this.messageError);
+    }
+    public unprocesseableEntity(): express.Response {
+        this.statusCode = 422;
         return this.res.status(this.statusCode).json(this.messageError);
     }
 }
