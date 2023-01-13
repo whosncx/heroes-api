@@ -65,7 +65,7 @@ export class HeroesApiService{
     public async getHeroes():Promise<ICharacters[]>{
         try{
            this.heroesList =  await axios.get(`https://${this.apiHost}/api/heroes`, { headers:this.headers })
-        }catch(err:any){
+          }catch(err:any){
             throw err
         }
 

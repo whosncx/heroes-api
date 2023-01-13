@@ -69,6 +69,7 @@ export class HeroesController{
 
    async searchHero(heroName:string){
         try{
+            
             this.hero= await this.service.searchHero(heroName)
         } catch(err:any){
             const erro = new Error();
