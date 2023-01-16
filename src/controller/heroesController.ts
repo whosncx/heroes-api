@@ -55,7 +55,7 @@ export class HeroesController{
         }
     }
 
-   async getHero(){
+   async getHero():Promise<ICharacters[]>{
         try{
             this.heroes = await this.service.getHeroes()
         }catch(err:any){

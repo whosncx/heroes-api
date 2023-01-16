@@ -64,8 +64,12 @@ export class HeroesApiService{
 
     public async getHeroes():Promise<ICharacters[]>{
         try{
-           this.heroesList =  await axios.get(`https://${this.apiHost}/api/heroes`, { headers:this.headers })
+           this.heroesList =  await (await axios.get(`https://${this.apiHost}/api/heroes`, { headers: this.headers })).data
           }catch(err:any){
+            console.error({
+              name: "Service Error Get Heroes",
+              message: err
+            })
             throw err
         }
 
@@ -73,16 +77,24 @@ export class HeroesApiService{
     }
     public async getVillains(){
         try{
-           this.villainsList =  await axios.get(`https://${this.apiHost}/api/villains`, this.headers)
+           this.villainsList =  await (await axios.get(`https://${this.apiHost}/api/villains`, this.headers)).data
         }catch(err:any){
+          console.error({
+            name: "Service Error Get Villains",
+            message: err
+          })
             throw err
         }
         return this.villainsList
     }
     public async searchHero(heroName:string){
         try{
-           this.hero =  await axios.post(`https://${this.apiHost}/api`, this.headers,{ params: {heroName}})
+           this.hero =  await (await axios.post(`https://${this.apiHost}/api`, this.headers, { params: { heroName } })).data
         }catch(err:any){
+          console.error({
+            name: "Service Error Search Hero",
+            message: err
+          })
             throw err
         }
         return this.hero

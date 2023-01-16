@@ -1,6 +1,7 @@
 import { Request, Response } from "express-serve-static-core"; 
 import { ErrosHttp } from "../../controller/errorHttp/errorsHttp";
 import { HeroesController } from "../../controller/heroesController";
+import { ICharacters } from '../../interfaces/ICharacters';
 
 export class HeroesBusiness{
     static validateHeroName(name: string){
@@ -8,10 +9,10 @@ export class HeroesBusiness{
             throw new Error ("invalid-name")
         }
     }
-    public async getHeroes(req: Request,res:Response):Promise<void>{ 
+    public async getHeroes(req: Request,res:Response){ 
         try{
             const controller = new HeroesController();
-            const heroes = await controller.getHero()
+            const heroes:ICharacters[] = await controller.getHero()
             res.status(200).json(heroes)
         } catch(err:any){
             new ErrosHttp(err,res).checkError()
@@ -22,7 +23,7 @@ export class HeroesBusiness{
         try{
         HeroesBusiness.validateHeroName(heroName)
         const controller = new HeroesController();
-        const hero = await controller.searchHero(heroName)
+        const hero:ICharacters = await controller.searchHero(heroName)
         res.status(200).json(hero)
         } catch(err:any){
             new ErrosHttp(err,res).checkError()
